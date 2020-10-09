@@ -1,3 +1,5 @@
+export { default as chakraTheme } from "./chakra";
+
 export const environement = process.env.NODE_ENV;
 
 export const graphqlEndpoint =
