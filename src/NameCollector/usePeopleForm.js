@@ -6,6 +6,7 @@ const DEFAULT_PEOPLE = [
   {
     name: "",
     number: "",
+    exceptions: [],
   },
 ];
 
@@ -60,7 +61,7 @@ const usePeopleForm = (onSubmit) => {
   return {
     handleSubmit: handleSubmit(onSubmit),
     people,
-    newBlankPerson: () => append({ name: "", number: "" }),
+    newBlankPerson: () => append({ name: "", number: "", exceptions: [] }),
   };
 };
 

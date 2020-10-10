@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Checkbox, Stack, Text } from "@chakra-ui/core";
 
-const SinglePerson = ({ person, people }) => {
+const SinglePerson = ({ person, people, toggleException }) => {
   const restOfPeople = people.filter((x) => x.id !== person.id);
 
   return (
@@ -17,28 +17,39 @@ const SinglePerson = ({ person, people }) => {
         get given.
       </Text>
       <Stack>
-        {restOfPeople.map((currentPerson) => (
-          <Box>
-            <Checkbox defaultIsChecked>{currentPerson.name}</Checkbox>
-          </Box>
-        ))}
+        {restOfPeople.map((currentPerson) => {
+          const isChecked = !person.exceptions.includes(currentPerson.id);
+
+          const onChange = () => toggleException(person.id, currentPerson.id);
+          return (
+            <Box key={currentPerson.id}>
+              <Checkbox onChange={onChange} isChecked={isChecked}>
+                {currentPerson.name}
+              </Checkbox>
+            </Box>
+          );
+        })}
       </Stack>
     </>
   );
 };
 
-export const ExceptionSetting = ({ people }) => {
+export const ExceptionSetting = ({ people, toggleException, onSubmit }) => {
   return (
     <Box padding={4}>
       <Stack spacing={6}>
         {people.map((person) => (
-          <Box>
-            <SinglePerson person={person} people={people}></SinglePerson>
+          <Box key={person.id}>
+            <SinglePerson
+              toggleException={toggleException}
+              person={person}
+              people={people}
+            ></SinglePerson>
           </Box>
         ))}
       </Stack>
       <Box pt={4}>
-        <Button>Submit</Button>
+        <Button onClick={onSubmit}>Submit</Button>
       </Box>
     </Box>
   );

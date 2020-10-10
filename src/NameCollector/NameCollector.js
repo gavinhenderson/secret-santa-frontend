@@ -18,22 +18,7 @@ import { gql, useMutation } from "@apollo/client";
 
 import usePeopleForm from "./usePeopleForm";
 
-const GENERATE_MATCHES = gql`
-  mutation generateMatches($people: [PeopleInput!]!) {
-    generateMatches(people: $people) {
-      validationErrors {
-        personId
-        field
-        error
-      }
-    }
-  }
-`;
-
 const NameCollector = ({ nextStage }) => {
-  // const [generateMatches, { data, loading, error }] = useMutation(
-  //   GENERATE_MATCHES
-  // );
   const onSubmit = (data) => {
     const peopleWithIds = data.people.map((person) => ({
       ...person,
@@ -42,8 +27,6 @@ const NameCollector = ({ nextStage }) => {
     }));
 
     nextStage(peopleWithIds);
-
-    // generateMatches({ variables: { people: peopleWithIds } });
   };
   const { people, newBlankPerson, handleSubmit } = usePeopleForm(onSubmit);
 
