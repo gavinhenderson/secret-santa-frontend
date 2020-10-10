@@ -22,7 +22,16 @@ const GENERATE_MATCHES = gql`
   }
 `;
 
+const HELLO_WORLD = gql`
+  query hello {
+    helloWorld
+  }
+`;
+
 function App() {
+  // Wake up the server
+  useQuery(HELLO_WORLD);
+
   const [people, setPeople] = useState([]);
   const [step, setStep] = useState(NAME_COLLECTION);
 
