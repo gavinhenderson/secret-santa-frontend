@@ -66,8 +66,6 @@ const usePeopleForm = (onSubmit) => {
 };
 
 const validatePhoneNumber = (number) => {
-  console.log(number);
-
   if (!number.startsWith("7")) {
     return "A phone number should start with +447";
   }

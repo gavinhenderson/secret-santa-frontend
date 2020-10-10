@@ -34,7 +34,7 @@ const SinglePerson = ({ person, people, toggleException }) => {
   );
 };
 
-export const ExceptionSetting = ({ people, toggleException, onSubmit }) => {
+export const ExceptionSetting = ({ people, toggleException }) => {
   return (
     <Box padding={4}>
       <Stack spacing={6}>
@@ -48,9 +48,6 @@ export const ExceptionSetting = ({ people, toggleException, onSubmit }) => {
           </Box>
         ))}
       </Stack>
-      <Box pt={4}>
-        <Button onClick={onSubmit}>Submit</Button>
-      </Box>
     </Box>
   );
 };

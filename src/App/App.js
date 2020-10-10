@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { v4 as uuidv4 } from "uuid";
 
 import NameCollector from "../NameCollector/NameCollector";
-import { Box, Link, Text } from "@chakra-ui/core";
+import { Box, Button, Link, Text } from "@chakra-ui/core";
 import { ExceptionSetting } from "../ExceptionSetting/ExceptionSetting";
 
 const NAME_COLLECTION = "NAME_COLLECTION";
@@ -40,14 +40,14 @@ function App() {
   );
 
   // const [people, setPeople] = useState([
-  //   { id: uuidv4(), name: "Gavin", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Linsey", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Scott", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Roland", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Steph", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Naomi", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Elaine", number: 1234, exceptions: [] },
-  //   { id: uuidv4(), name: "Stephen", number: 1234, exceptions: [] },
+  //   { id: uuidv4(), name: "Gavin", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Linsey", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Scott", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Roland", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Steph", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Naomi", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Elaine", number: "+447414525394", exceptions: [] },
+  //   { id: uuidv4(), name: "Stephen", number: "+447414525394", exceptions: [] },
   // ]);
   // const [step, setStep] = useState(EXCEPTION_SETTING);
 
@@ -96,15 +96,45 @@ function App() {
           letting them know who they have to buy a present for.
         </Text>
       </Box>
-      {step === NAME_COLLECTION && (
+      {error && (
+        <Box p={4}>
+          <Text color="red.400" fontWeight="bold">
+            Uh oh, something went wrong.
+          </Text>
+        </Box>
+      )}
+      {data && (
+        <Box p={4}>
+          <Text color="green.500" fontWeight="bold">
+            Your secret santa has started! A text has been sent to all your
+            participants.
+          </Text>
+        </Box>
+      )}
+      {!error && !data && step === NAME_COLLECTION && (
         <NameCollector nextStage={nextStage}></NameCollector>
       )}
-      {step === EXCEPTION_SETTING && (
+      {!error && !data && step === EXCEPTION_SETTING && (
         <ExceptionSetting
           people={people}
           toggleException={toggleException}
-          onSubmit={() => generateMatches({ variables: { people } })}
         ></ExceptionSetting>
+      )}
+      {!error && !data && (
+        <Box p={4}>
+          <Button
+            disabled={loading || error}
+            onClick={async () => {
+              try {
+                await generateMatches({ variables: { people } });
+              } catch (_) {
+                // nom
+              }
+            }}
+          >
+            Submit
+          </Button>
+        </Box>
       )}
     </>
   );
