@@ -30,10 +30,10 @@ const GENERATE_MATCHES = gql`
   }
 `;
 
-const NameCollector = () => {
-  const [generateMatches, { data, loading, error }] = useMutation(
-    GENERATE_MATCHES
-  );
+const NameCollector = ({ nextStage }) => {
+  // const [generateMatches, { data, loading, error }] = useMutation(
+  //   GENERATE_MATCHES
+  // );
   const onSubmit = (data) => {
     const peopleWithIds = data.people.map((person) => ({
       ...person,
@@ -41,7 +41,9 @@ const NameCollector = () => {
       number: `+44${person.number}`,
     }));
 
-    generateMatches({ variables: { people: peopleWithIds } });
+    nextStage(peopleWithIds);
+
+    // generateMatches({ variables: { people: peopleWithIds } });
   };
   const { people, newBlankPerson, handleSubmit } = usePeopleForm(onSubmit);
 

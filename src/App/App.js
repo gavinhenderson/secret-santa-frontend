@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
+import { v4 as uuidv4 } from "uuid";
 
 import NameCollector from "../NameCollector/NameCollector";
 import { Box, Link, Text } from "@chakra-ui/core";
+import { ExceptionSetting } from "../ExceptionSetting/ExceptionSetting";
+
+const NAME_COLLECTION = "NAME_COLLECTION";
+const EXCEPTION_SETTING = "EXCEPTION_SETTING";
 
 function App() {
+  const [people, setPeople] = useState([]);
+  const [step, setStep] = useState(NAME_COLLECTION);
+
+  // const [people, setPeople] = useState([
+  //   { id: uuidv4(), name: "Gavin", number: 1234 },
+  //   { id: uuidv4(), name: "Linsey", number: 1234 },
+  //   { id: uuidv4(), name: "Scott", number: 1234 },
+  //   { id: uuidv4(), name: "Roland", number: 1234 },
+  //   { id: uuidv4(), name: "Steph", number: 1234 },
+  //   { id: uuidv4(), name: "Naomi", number: 1234 },
+  //   { id: uuidv4(), name: "Elaine", number: 1234 },
+  //   { id: uuidv4(), name: "Stephen", number: 1234 },
+  // ]);
+  // const [step, setStep] = useState(EXCEPTION_SETTING);
+
+  const nextStage = (people) => {
+    setPeople(people);
+    setStep(EXCEPTION_SETTING);
+  };
+
   return (
     <>
       <Box margin={4}>
@@ -24,7 +49,12 @@ function App() {
           letting them know who they have to buy a present for.
         </Text>
       </Box>
-      <NameCollector></NameCollector>
+      {step === NAME_COLLECTION && (
+        <NameCollector nextStage={nextStage}></NameCollector>
+      )}
+      {step === EXCEPTION_SETTING && (
+        <ExceptionSetting people={people}></ExceptionSetting>
+      )}
     </>
   );
 }
