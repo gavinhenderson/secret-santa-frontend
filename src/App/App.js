@@ -120,7 +120,7 @@ function App() {
           toggleException={toggleException}
         ></ExceptionSetting>
       )}
-      {!error && !data && (
+      {!error && !data && step === EXCEPTION_SETTING && (
         <Box p={4}>
           <Button
             disabled={loading || error}
