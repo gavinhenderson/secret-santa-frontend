@@ -10,7 +10,7 @@ const DEFAULT_PEOPLE = [
 ];
 
 const usePeopleForm = (onSubmit) => {
-  const { register, control, handleSubmit, reset, watch } = useForm({
+  const { register, control, handleSubmit, reset, watch, errors } = useForm({
     defaultValues: {
       people: DEFAULT_PEOPLE,
     },
@@ -24,6 +24,11 @@ const usePeopleForm = (onSubmit) => {
   );
 
   const people = fields.map((field, index) => {
+    const error = errors && errors.people && errors.people[index];
+
+    const nameError = error && error.name;
+    const numberError = error && error.number;
+
     return {
       ...field,
       numberLabelProps: {
@@ -31,17 +36,24 @@ const usePeopleForm = (onSubmit) => {
       },
       numberInputProps: {
         id: `number-${field.id}`,
+        isInvalid: !!numberError,
         name: `people[${index}].number`,
-        ref: register(),
+        ref: register({
+          required: "You must enter a phone number.",
+          validate: validatePhoneNumber,
+        }),
       },
+      numberError: numberError && numberError.message,
       nameLabelProps: {
         htmlFor: `name-${field.id}`,
       },
       nameInputProps: {
         name: `people[${index}].name`,
-        ref: register(),
+        isInvalid: !!nameError,
+        ref: register({ required: "You must enter a name." }),
         id: `name-${field.id}`,
       },
+      nameError: nameError && nameError.message,
     };
   });
 
@@ -50,6 +62,23 @@ const usePeopleForm = (onSubmit) => {
     people,
     newBlankPerson: () => append({ name: "", number: "" }),
   };
+};
+
+const validatePhoneNumber = (number) => {
+  console.log(number);
+
+  if (!number.startsWith("7")) {
+    return "A phone number should start with +447";
+  }
+  if (number.length > 10) {
+    return "Too many digits";
+  }
+
+  if (number.length < 10) {
+    return "Not enough digits";
+  }
+
+  return null;
 };
 
 export default usePeopleForm;

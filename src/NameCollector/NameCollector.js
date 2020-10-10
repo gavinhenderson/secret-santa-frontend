@@ -1,6 +1,19 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Icon,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Stack,
+  Tooltip,
+} from "@chakra-ui/core";
 import { gql, useMutation } from "@apollo/client";
 
 import usePeopleForm from "./usePeopleForm";
@@ -32,18 +45,54 @@ const NameCollector = () => {
   const { people, newBlankPerson, handleSubmit } = usePeopleForm(onSubmit);
 
   return (
-    <form onSubmit={handleSubmit}>
-      {people.map((person) => (
-        <FormControl key={person.id}>
-          <FormLabel {...person.nameLabelProps}>Given Name</FormLabel>
-          <Input {...person.nameInputProps} placeholder="Gavin Hendereson" />
-          <FormLabel {...person.numberLabelProps}>Phone Number</FormLabel>
-          <Input {...person.numberInputProps} placeholder="+4778634873838" />
-        </FormControl>
-      ))}
-      <Button onClick={newBlankPerson}>Add Person</Button>
-      <Button type="submit">Submit</Button>
-    </form>
+    <Box padding={4}>
+      <form onSubmit={handleSubmit}>
+        <Stack spacing={6}>
+          {people.map((person) => (
+            <FormControl key={person.id}>
+              <Stack>
+                <Box>
+                  <FormLabel {...person.nameLabelProps}>Name</FormLabel>
+                  <Input
+                    {...person.nameInputProps}
+                    placeholder="Gavin Henderson"
+                  />
+                  <FormErrorMessage isInvalid={person.nameInputProps.isInvalid}>
+                    {person.nameError}
+                  </FormErrorMessage>
+                </Box>
+
+                <Box>
+                  <FormLabel {...person.numberLabelProps}>
+                    Phone Number
+                  </FormLabel>
+                  <InputGroup>
+                    <InputLeftAddon children="+44" />
+                    <Input
+                      {...person.numberInputProps}
+                      type="tel"
+                      roundedLeft="0"
+                      placeholder="7414565754"
+                    />
+                  </InputGroup>
+                  <FormErrorMessage
+                    isInvalid={person.numberInputProps.isInvalid}
+                  >
+                    {person.numberError}
+                  </FormErrorMessage>
+                </Box>
+              </Stack>
+            </FormControl>
+          ))}
+        </Stack>
+        <Box pt={8}>
+          <Button mr={3} onClick={newBlankPerson}>
+            Add Person
+          </Button>
+          <Button type="submit">Submit</Button>
+        </Box>
+      </form>
+    </Box>
   );
 };
 

@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { ApolloProvider } from "@apollo/client";
-import { ThemeProvider } from "@chakra-ui/core";
+import { CSSReset, ThemeProvider } from "@chakra-ui/core";
 
-import "./index.css";
 import App from "./App/App";
 import * as serviceWorker from "./serviceWorker";
 import { client } from "./apollo-client";
@@ -12,6 +11,7 @@ import { chakraTheme } from "./config";
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={chakraTheme}>
+      <CSSReset />
       <ApolloProvider client={client}>
         <App />
       </ApolloProvider>
