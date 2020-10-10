@@ -38,6 +38,7 @@ const NameCollector = () => {
     const peopleWithIds = data.people.map((person) => ({
       ...person,
       id: uuidv4(),
+      number: `+44${person.number}`,
     }));
 
     generateMatches({ variables: { people: peopleWithIds } });
