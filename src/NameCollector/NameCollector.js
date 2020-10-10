@@ -1,10 +1,34 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
+import { gql, useMutation } from "@apollo/client";
 
 import usePeopleForm from "./usePeopleForm";
 
+const GENERATE_MATCHES = gql`
+  mutation generateMatches($people: [PeopleInput!]!) {
+    generateMatches(people: $people) {
+      validationErrors {
+        personId
+        field
+        error
+      }
+    }
+  }
+`;
+
 const NameCollector = () => {
-  const onSubmit = (data) => console.log("data", data);
+  const [generateMatches, { data, loading, error }] = useMutation(
+    GENERATE_MATCHES
+  );
+  const onSubmit = (data) => {
+    const peopleWithIds = data.people.map((person) => ({
+      ...person,
+      id: uuidv4(),
+    }));
+
+    generateMatches({ variables: { people: peopleWithIds } });
+  };
   const { people, newBlankPerson, handleSubmit } = usePeopleForm(onSubmit);
 
   return (
