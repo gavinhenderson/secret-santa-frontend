@@ -1246,6 +1246,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@feedback-fish/react@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@feedback-fish/react/-/react-1.1.0.tgz#757ab82312dde534d380fb5afb45b1df810c1aa1"
+  integrity sha512-npbRNUmLwOHe2ysjQLlrlMTdp8LOSFH3maIc0uKSexbpQDj99lHDUwOfhgSjWzT6LTz/MZlQkmRoj7AOTuEqPQ==
+
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.0.tgz#0eee6373e11418bfe0b5638f654df7a4ca6a3950"

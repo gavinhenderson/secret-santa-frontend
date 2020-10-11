@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { v4 as uuidv4 } from "uuid";
+import { FeedbackFish } from "@feedback-fish/react";
 
 import NameCollector from "../NameCollector/NameCollector";
 import { Box, Button, Link, Text } from "@chakra-ui/core";
@@ -95,6 +96,12 @@ function App() {
           part in your secret santa game. They will all then be sent a text
           letting them know who they have to buy a present for.
         </Text>
+        <FeedbackFish projectId="055050f9276e07">
+          <Link color="teal.500">
+            I would love to hear if you have any feedback. Click here to submit
+            feedback
+          </Link>
+        </FeedbackFish>
       </Box>
       {error && (
         <Box p={4}>
