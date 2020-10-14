@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Box,
   Button,
+  Checkbox,
   Divider,
   FormControl,
   FormErrorMessage,
@@ -11,6 +12,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Link,
   Stack,
   Tooltip,
 } from "@chakra-ui/core";
@@ -19,6 +21,12 @@ import { gql, useMutation } from "@apollo/client";
 import usePeopleForm from "./usePeopleForm";
 
 const NameCollector = ({ nextStage }) => {
+  const [permission, setPermission] = useState(false);
+
+  const togglePermission = () => {
+    setPermission(!permission);
+  };
+
   const onSubmit = (data) => {
     const peopleWithIds = data.people.map((person) => ({
       ...person,
@@ -71,12 +79,23 @@ const NameCollector = ({ nextStage }) => {
             </FormControl>
           ))}
         </Stack>
-        <Box pt={8}>
-          <Button mr={3} onClick={newBlankPerson}>
-            Add Person
-          </Button>
-          <Button type="submit">Submit</Button>
-        </Box>
+        <Stack pt={8}>
+          <Checkbox onChange={togglePermission} isChecked={permission}>
+            All the participants have consented to having their phone numbers
+            used and have been agreed to the{" "}
+            <Link href="/privacy-policy.html" color="teal.500">
+              privacy policy.
+            </Link>
+          </Checkbox>
+          <Box>
+            <Button mr={3} onClick={newBlankPerson}>
+              Add Person
+            </Button>
+            <Button type="submit" isDisabled={!permission}>
+              Submit
+            </Button>
+          </Box>
+        </Stack>
       </form>
     </Box>
   );
