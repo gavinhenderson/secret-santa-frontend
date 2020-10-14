@@ -82,7 +82,7 @@ const NameCollector = ({ nextStage }) => {
         <Stack pt={8}>
           <Checkbox onChange={togglePermission} isChecked={permission}>
             All the participants have consented to having their phone numbers
-            used and have been agreed to the{" "}
+            used and have agreed to the{" "}
             <Link href="/privacy-policy.html" color="teal.500">
               privacy policy.
             </Link>
